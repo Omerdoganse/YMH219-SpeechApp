@@ -125,7 +125,10 @@ public partial class MainForm
             return;
         }
 
-        _cmbVoice.SelectedIndex = Math.Max(0, voices.ToList().FindIndex(v => v.Id == _tts.CurrentVoiceName));
+        // Türkçe ses kuruluysa onu, değilse sistemin varsayılan sesini seç
+        int trIndex = voices.ToList().FindIndex(v => v.Culture.Name == "tr-TR");
+        int defaultIndex = voices.ToList().FindIndex(v => v.Id == _tts.CurrentVoiceName);
+        _cmbVoice.SelectedIndex = trIndex >= 0 ? trIndex : Math.Max(0, defaultIndex);
         UpdateTtsButtons();
         SetStatus($"{voices.Count} ses bulundu. Metin okumaya hazır.");
     }

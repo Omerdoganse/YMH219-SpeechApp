@@ -64,7 +64,8 @@ public sealed class TextToSpeechService : IDisposable
         _synth.GetInstalledVoices()
               .Where(v => v.Enabled)
               .Select(v => new VoiceOption(v.VoiceInfo.Name,
-                  $"{v.VoiceInfo.Name} ({v.VoiceInfo.Culture.DisplayName}, {TranslateGender(v.VoiceInfo.Gender)})"))
+                  $"{v.VoiceInfo.Name} ({v.VoiceInfo.Culture.DisplayName}, {TranslateGender(v.VoiceInfo.Gender)})",
+                  v.VoiceInfo.Culture))
               .ToList();
 
     private static string TranslateGender(VoiceGender gender) => gender switch

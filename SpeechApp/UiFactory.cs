@@ -24,6 +24,14 @@ internal static class UiFactory
         };
         button.FlatAppearance.BorderColor = Color.FromArgb(180, 185, 195);
         button.Click += onClick;
+
+        // Renkli butonlar devre dışıyken soluk görünsün (kullanıcı geri bildirimi)
+        if (backColor.HasValue)
+        {
+            Color active = backColor.Value;
+            button.EnabledChanged += (_, _) =>
+                button.BackColor = button.Enabled ? active : Color.FromArgb(200, 203, 210);
+        }
         return button;
     }
 

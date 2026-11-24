@@ -99,7 +99,7 @@ public partial class MainForm
         }
 
         // Türkçe tanıyıcı varsa onu, yoksa ilkini seç
-        int trIndex = recognizers.ToList().FindIndex(r => r.DisplayName.Contains("(tr-TR)"));
+        int trIndex = recognizers.ToList().FindIndex(r => r.Culture.Name == "tr-TR");
         _cmbLanguage.SelectedIndex = trIndex >= 0 ? trIndex : 0;
         UpdateSttButtons();
     }

@@ -37,7 +37,7 @@ public sealed class SpeechToTextService : IDisposable
         try
         {
             return SpeechRecognitionEngine.InstalledRecognizers()
-                .Select(r => new VoiceOption(r.Id, $"{r.Culture.DisplayName} ({r.Culture.Name})"))
+                .Select(r => new VoiceOption(r.Id, $"{r.Culture.DisplayName} ({r.Culture.Name})", r.Culture))
                 .ToList();
         }
         catch (Exception ex) when (ex is InvalidOperationException or PlatformNotSupportedException
