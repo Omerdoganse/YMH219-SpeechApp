@@ -54,6 +54,7 @@ public partial class MainForm : Form
         Controls.Add(statusStrip);
 
         _mainLayout.Controls.Add(BuildTtsPanel(), 0, 0);
+        _mainLayout.Controls.Add(BuildSttPanel(), 1, 0);
 
         UpdateActivityIndicator();
     }
@@ -62,6 +63,7 @@ public partial class MainForm : Form
     {
         base.OnShown(e);
         InitializeTts();
+        InitializeStt();
     }
 
     /// <summary>
@@ -81,6 +83,18 @@ public partial class MainForm : Form
             case TtsState.Paused:
                 parts.Add("⏸ Okuma duraklatıldı");
                 color = Color.FromArgb(210, 130, 30);
+                break;
+        }
+
+        switch (_stt?.State)
+        {
+            case SttState.Listening:
+                parts.Add("🎤 Mikrofon dinleniyor");
+                color = parts.Count > 1 ? Color.FromArgb(120, 60, 160) : Color.FromArgb(200, 50, 50);
+                break;
+            case SttState.Stopping:
+                parts.Add("… Dinleme durduruluyor");
+                color = parts.Count > 1 ? Color.FromArgb(120, 60, 160) : Color.FromArgb(160, 90, 90);
                 break;
         }
 
@@ -107,6 +121,7 @@ public partial class MainForm : Form
     protected override void OnFormClosing(FormClosingEventArgs e)
     {
         _tts?.Dispose();
+        _stt.Dispose();
         base.OnFormClosing(e);
     }
 }
